@@ -8,7 +8,7 @@ const RepoList =  () => {
     
 
     useEffect(() =>{
-        axios.get('https://api.github.com/users/spavythra/repos')
+        axios.get(`https://api.github.com/users/${process.env.REACT_APP_USER}/repos`)
         .then((response) => {
             setPublicList( response.data );
         
@@ -21,7 +21,13 @@ const RepoList =  () => {
     })
     console.log(publicRepoName)
 
-    
+    // useEffect(() =>{
+    //     axios.get('https://api.github.com/users/spavythra/repos')
+    //     .then((response) => {
+    //         setPublicList( response.data );
+        
+    // })
+    // }, []);
 
 // const response =  await axios.get(`https://api.github.com/users/spavythra/repos`)
 
