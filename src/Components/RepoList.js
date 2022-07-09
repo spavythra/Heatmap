@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const RepoList =  () => {
+const RepoList =  (Private_repos) => {
     const [publicList, setPublicList] = useState([])
-    const [privateList, setPrivateList] = useState([])
     let publicRepoName = []
-    let eee = []
+    let visibility = []
+    var public_repo_data = {}
+    console.log(Private_repos)
     
 
     useEffect(() =>{
@@ -18,32 +19,15 @@ const RepoList =  () => {
     console.log(publicList)
     publicList.map((item) => {
         publicRepoName.push(item.name)
-        eee.push(item.visibility)
+        visibility.push(item.visibility)
     })
-    // console.log(publicRepoName)
 
-    // const headers = {
-    //     "Authorization" : `Token ${process.env.TOKEN}`
-    //   }
+    for (let i = 0; i < publicRepoName.length; i++){
+        public_repo_data[publicRepoName[i]] = visibility[i];
+    }
 
-    // useEffect(() =>{
-    //     axios.get(`https://api.github.com/search/repositories?q=repo:${process.env.REACT_APP_USER}`, {
-    //         headers: {"Authorization" : `Token ${process.env.TOKEN}`}
-    //     })
-    //     .then((response) => {
-    //         setPrivateList( response.data )
-    //         .catch((error) => {
-    //             console.log(error)
-    //           });
-        
-    // })
-    // }, []);
-    // console.log(privateList)
-
-// const response =  await axios.get(`https://api.github.com/users/spavythra/repos`)
-
-// arr = response;
-//  console.log(arr)
+    console.log(public_repo_data)
+    
 
   return (
     <div>fff</div>

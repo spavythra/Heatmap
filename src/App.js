@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       heatmap
-      <RepoList/>
+      {/* <RepoList/> */}
       <PrivateRepoList/>
     </div>
   );

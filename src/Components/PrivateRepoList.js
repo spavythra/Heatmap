@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import RepoList from './RepoList';
 
 const PrivateRepoList =  () => {
-    const [privateList, setPrivateList] = useState([])
+    let privateRepoName = []
+    let visibility = []
+    var private_repo_data = {}
 
     useEffect (() => {
         async function fetchData(){
@@ -14,8 +17,23 @@ const PrivateRepoList =  () => {
             })
             let data = await response.json()
             let result = data.items
-            setPrivateList(result)
             console.log(result)
+
+            result.map((item) => {
+                // console.log(item.visibility)
+                privateRepoName.push(item.name)
+                visibility.push(item.visibility)
+            })
+
+            privateRepoName.map((item) => console.log("g"))
+            console.log(privateRepoName)
+            console.log(visibility)
+
+            for (let i = 0; i < privateRepoName.length; i++){
+                private_repo_data[privateRepoName[i]] = visibility[i];
+            }
+        
+            // console.log(private_repo_data)
             } catch(err) {
                 console.log(err)
             }
@@ -23,9 +41,10 @@ const PrivateRepoList =  () => {
         fetchData()
     }, [])
 
-    
+
   return (
-    <div>PrivateRepoList</div>
+    // <div>lll</div>
+    <div><RepoList private_list ={{private_repo_data}}/></div>
   )
 }
 
