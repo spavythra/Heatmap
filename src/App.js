@@ -1,4 +1,5 @@
 import './App.css';
+import PrivateRepoList from './Components/PrivateRepoList';
 import RepoList from './Components/RepoList';
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="App">
       heatmap
       <RepoList/>
+      <PrivateRepoList/>
     </div>
   );
 }
