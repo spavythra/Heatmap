@@ -46,7 +46,7 @@ const RepoList =  () => {
     useEffect(() =>{
         loadData();
         setCommitList(total_list)
-        console.log("rrrrr")
+        console.log("gggg")
         }, []);
 
     const loadData = async () => {
@@ -76,11 +76,7 @@ const RepoList =  () => {
                             // commit_date.push(exact_date)
                         })
                     })
-                    .then(() => {
-                        
-                        ;
-                        key_id++;
-                } )
+                    .then(() => key_id++ )
                 
             }
             }
@@ -88,7 +84,7 @@ const RepoList =  () => {
         }
     }
     
-    // console.log(commitList)    
+    console.log(commitList)    
 
   return (
     // <div>ss</div>

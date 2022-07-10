@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
+import 'react-calendar-heatmap/dist/styles.css';
+import "../App.css"
 
 const today = new Date().toISOString().split("T")[0];
-var date_new = new Date('Sun Jul 11 2021 03:00:00 GMT+0300 (Eastern European Summer Time)');
-// date_new.toISOString()
-date_new.toISOString().slice(0, 10)
-// date_new.toISOString()
-console.log(date_new)
-// (date_new.split("T",1)).toString();
-// console.log(format_date )
 
 function CommitList(props) 
 {
-    const [commitList, setCommitList] = useState([])
     let final_commit_count = [];
 
     console.log(props.public_list.commitList)
@@ -86,11 +80,12 @@ function CommitList(props)
         var format_date = date.toISOString().slice(0, 10);
         // console.log("qqqqq")
         // console.log(commit_values.length)
-        console.log(final_commit_count.length)
+        // console.log(final_commit_count.length)
         for(var i=0; i<commit_values.length; i++){
-          for (var i=0; i<final_commit_count.length; i++){
-            if(final_commit_count[i].date == date.toISOString().slice(0, 10) ){
-              return final_commit_count[i].count ;
+          for (var j=0; j<final_commit_count.length; j++){
+            console.log("kkk")
+            if(final_commit_count[j].date == date.toISOString().slice(0, 10) ){
+              return final_commit_count[j].count ;
             } else{
               continue
             }
@@ -112,16 +107,19 @@ function CommitList(props)
     
   return (
     <div> <h1>react-calendar-heatmap demos</h1>
-    <p>Random values with onClick and react-tooltip</p>
+    
     <CalendarHeatmap
       startDate={shiftDate(today, -365)}
       endDate={today}
       values={randomValues}
       classForValue={value => {
-        if (!value) {
+        
+        if (value.count==0) {
           return 'color-empty';
-        }
-        return `color-github-${value.count}`;
+        }else if(value.count<3) {return `color-github-2`}
+        else if(value.count<6) {return `color-github-3`}
+        else if(value.count>=6)  {return `color-github-4`}
+        
       }}
       tooltipDataAttrs={value => {
         // console.log(value.date)
