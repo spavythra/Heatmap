@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import RepoList from './RepoList';
 
-const PrivateRepoList =  () => {
+const PrivateRepoList =  (props) => {
     let privateRepoName = []
     let visibility = []
     var private_repo_data = {}
+    console.log(props.public_list.public_repo_data)
 
     useEffect (() => {
         async function fetchData(){
@@ -32,6 +33,8 @@ const PrivateRepoList =  () => {
             for (let i = 0; i < privateRepoName.length; i++){
                 private_repo_data[privateRepoName[i]] = visibility[i];
             }
+
+            
         
             // console.log(private_repo_data)
             } catch(err) {
@@ -41,10 +44,12 @@ const PrivateRepoList =  () => {
         fetchData()
     }, [])
 
+    const full_list = Object.assign(private_repo_data, props.public_list.public_repo_data)
+                console.log(full_list)
 
   return (
-    // <div>lll</div>
-    <div><RepoList private_list ={{private_repo_data}}/></div>
+    <div>lll</div>
+    // <div><RepoList private_list ={{private_repo_data}}/></div>
   )
 }
 
