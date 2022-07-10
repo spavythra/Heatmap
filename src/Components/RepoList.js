@@ -36,33 +36,49 @@ const RepoList =  () => {
 
     console.log(public_repo_data)
 
+    var key_id = 0;
+
     useEffect(() =>{
-        for( let [key,value] of Object.entries(public_repo_data)){
-            if(value==="public"){
-                console.log("commitList")
-                    axios.get(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${key}/commits`)
-                    .then((response) => {
-                        console.log( response.data);
-                        console.log( "gjkk");
-                        setCommitList( response.data);
+        // while(key_id < Object.keys(public_repo_data))
+        for( let [key,value] of Object.entries(public_repo_data))
+    
+        // for( let [key,value] of Object.entries(public_repo_data))
+        {
+            console.log(key)
+            if(public_repo_data.hasOwnProperty(key)){
+                console.log("eee")
+
+                if(value==="public")
+            {
+                console.log(key)
+                   fetch(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${key}/commits`)
+                    
+                    .then((response) => (response.json()))
+                    .then((data) =>{
+                        setCommitList(data);
+                        console.log(data)
                         // total_list = Object.assign(total_list, response.data)
-                        commitList.map((item) => {
-                            // console.log(item.commit.author.date)
+                        data.map((item) => {
+                            console.log(`repo name: ${key} and date:${item.commit.author.date}`)
                             commit_date.push(item.commit.author.date)
                         })
-                    
-                })
-                .then(() => console.log(commit_date))
+                    })
+                    .then(() => {console.log(commit_date)
+                        console.log("jjj")
+                    key_id++;
+                } )
+                
                 
                 
             }
+            }
+            
         }}, []);
     
-        
-    
+       console.log("hh") 
 
   return (
-    <div>llll</div>
+    <div>{commit_date}</div>
     // <div><CommitList public_list={{public_repo_data}}/></div>
   )
 }
