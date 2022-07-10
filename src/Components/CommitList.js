@@ -13,7 +13,7 @@ function CommitList(props)
 
     console.log(props.public_list.commitList)
     let commit_values = props.public_list.commitList;
-    // console.log(commit_values)
+    console.log(commit_values)
 
     function commit_count(date, count){
         this.date = date;
@@ -83,7 +83,6 @@ function CommitList(props)
         // console.log(final_commit_count.length)
         for(var i=0; i<commit_values.length; i++){
           for (var j=0; j<final_commit_count.length; j++){
-            console.log("kkk")
             if(final_commit_count[j].date == date.toISOString().slice(0, 10) ){
               return final_commit_count[j].count ;
             } else{
@@ -116,9 +115,10 @@ function CommitList(props)
         
         if (value.count==0) {
           return 'color-empty';
-        }else if(value.count<3) {return `color-github-2`}
-        else if(value.count<6) {return `color-github-3`}
-        else if(value.count>=6)  {return `color-github-4`}
+        }else if(value.count<3) {return `color-github-1`}
+        else if(value.count<6) {return `color-github-2`}
+        else if(value.count<9) {return `color-github-3`}
+        else if(value.count>=9)  {return `color-github-4`}
         
       }}
       tooltipDataAttrs={value => {

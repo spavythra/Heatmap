@@ -6,8 +6,8 @@ function App() {
   return (
     <div className="App">
       <h1>Individual heatmap</h1>
-      <RepoList/>
-      {/* <PrivateRepoList/> */}
+      {/* <RepoList/> */}
+      <PrivateRepoList/>
     </div>
   );
 }

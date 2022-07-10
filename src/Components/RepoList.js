@@ -3,14 +3,19 @@ import axios from 'axios';
 import PrivateRepoList from './PrivateRepoList';
 import CommitList from './CommitList';
 
-const RepoList =  () => {
+const RepoList =  (props) => {
     const [publicList, setPublicList] = useState([])
+    const [privateList, setPrivateList] = useState([])
     const [commitList, setCommitList] = useState([])
     let publicRepoName = []
     let visibility = []
     var public_repo_data = {}
     let commit_date = []
     let total_list = []
+
+    console.log(props.private_list.private_repo_data)
+    let private_repos = props.private_list.private_repo_data;
+    
    
     function commit_message(date, msg){
         this.date = date;
@@ -39,6 +44,9 @@ const RepoList =  () => {
         public_repo_data[publicRepoName[i]] = visibility[i];
     }
 
+    const full_list = Object.assign(private_repos, public_repo_data)
+
+    console.log(full_list)
     // console.log(public_repo_data)
 
     var key_id = 0;
@@ -46,14 +54,14 @@ const RepoList =  () => {
     useEffect(() =>{
         loadData();
         setCommitList(total_list)
-        console.log("gggg")
+        console.log("qqqq")
         }, []);
 
     const loadData = async () => {
-        for( let [key,value] of Object.entries(public_repo_data))
+        for( let [key,value] of Object.entries(full_list))
         {
             // console.log(key)
-            if(public_repo_data.hasOwnProperty(key)){
+            if(full_list.hasOwnProperty(key)){
 
                 if(value==="public")
             {
@@ -78,6 +86,29 @@ const RepoList =  () => {
                     })
                     .then(() => key_id++ )
                 
+            } else {
+                // console.log(key)
+
+                let response = await fetch(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${key}/commits`,{
+                method: 'get',
+                headers: {
+                    "Authorization" : `Token ${process.env.REACT_APP_TOKEN}`
+                }
+            })
+            let data = await response.json()
+            // console.log(data)
+            setPrivateList(data)
+            
+            privateList.map((item) => {
+                
+                const exact_date = (item.commit.author.date.split("T",1)).toString();
+                console.log(exact_date)
+                var commit_messages = new commit_message(exact_date, item.commit.message)
+                total_list.push(commit_messages)
+                
+            })
+            key_id = await key_id++;
+            
             }
             }
             
@@ -87,7 +118,7 @@ const RepoList =  () => {
     console.log(commitList)    
 
   return (
-    // <div>ss</div>
+    
     <div><CommitList public_list={{commitList}}/></div>
   )
 }
