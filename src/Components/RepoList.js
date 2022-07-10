@@ -46,7 +46,7 @@ const RepoList =  () => {
     useEffect(() =>{
         loadData();
         setCommitList(total_list)
-        console.log("wwwwwww")
+        console.log("wwwdddddwwww")
         }, []);
 
     const loadData = async () => {
@@ -67,10 +67,13 @@ const RepoList =  () => {
                         // total_list = Object.assign(total_list, response.data)
                         data.map((item) => {
                             // console.log(`repo name is: ${key} and date:${item.commit.author.date}`)
-                            const exact_date = item.commit.author.date.split("T",1);
-                            var commit_messages = new commit_message(item.commit.author.date, item.commit.message)
+                            const exact_date = (item.commit.author.date.split("T",1)).toString();
+                            
+                            var commit_messages = new commit_message(exact_date, item.commit.message)
                             total_list.push(commit_messages)
-                            commit_date.push(exact_date)
+                            // exact_date.push(item.commit.message)
+                            // console.log(exact_date)
+                            // commit_date.push(exact_date)
                         })
                     })
                     .then(() => {
