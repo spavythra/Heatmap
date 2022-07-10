@@ -29,7 +29,7 @@ const RepoList =  () => {
         
     })
     }, []);
-    console.log(publicList)
+    // console.log(publicList)
     publicList.map((item) => {
         publicRepoName.push(item.name)
         visibility.push(item.visibility)
@@ -39,14 +39,14 @@ const RepoList =  () => {
         public_repo_data[publicRepoName[i]] = visibility[i];
     }
 
-    console.log(public_repo_data)
+    // console.log(public_repo_data)
 
     var key_id = 0;
 
     useEffect(() =>{
         loadData();
         setCommitList(total_list)
-        console.log("wwwdddddwwww")
+        console.log("rrrrr")
         }, []);
 
     const loadData = async () => {

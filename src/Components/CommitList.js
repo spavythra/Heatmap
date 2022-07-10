@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import ReactDOM from 'react-dom';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import ReactTooltip from 'react-tooltip';
 
-function CommitList(props) {
+const today = new Date().toISOString().split("T")[0];
+var date_new = new Date('Sun Jul 11 2021 03:00:00 GMT+0300 (Eastern European Summer Time)');
+// date_new.toISOString()
+date_new.toISOString().slice(0, 10)
+// date_new.toISOString()
+console.log(date_new)
+// (date_new.split("T",1)).toString();
+// console.log(format_date )
+
+function CommitList(props) 
+{
     const [commitList, setCommitList] = useState([])
+    let final_commit_count = [];
+
     console.log(props.public_list.commitList)
     let commit_values = props.public_list.commitList;
+    // console.log(commit_values)
 
     function commit_count(date, count){
         this.date = date;
         this.count = count;
         // this.message = [];
     }
-    for (var i=0; i<commit_values.length; i++){
-        console.log(commit_values[i].date)
-    }
+    // for (var i=0; i<commit_values.length; i++){
+    //     console.log(commit_values[i].date)
+    // }
 
     function findOcc(arr, key){
       let arr2 = [];
@@ -46,10 +61,80 @@ function CommitList(props) {
     }
 
     let key = "date"
-      console.log(findOcc(commit_values, key))
+      // console.log(findOcc(commit_values, key))
+      final_commit_count = findOcc(commit_values, key)
+      console.log(final_commit_count)
+
+      const randomValues = getRange(365).map(index => {
+        return {
+          date: shiftDate(today, -index),
+          count: getRandomInt(shiftDate(today, -index)),
+        };
+      });
+
+      function shiftDate(date, numDays) {
+        const newDate = new Date(date);
+        newDate.setDate(newDate.getDate() + numDays);
+        return newDate;
+      }
+      
+      function getRange(count) {
+        return Array.from({ length: count }, (_, i) => i);
+      }
+      
+      function getRandomInt(date) {
+        var format_date = date.toISOString().slice(0, 10);
+        // console.log("qqqqq")
+        // console.log(commit_values.length)
+        console.log(final_commit_count.length)
+        for(var i=0; i<commit_values.length; i++){
+          for (var i=0; i<final_commit_count.length; i++){
+            if(final_commit_count[i].date == date.toISOString().slice(0, 10) ){
+              return final_commit_count[i].count ;
+            } else{
+              continue
+            }
+          }
+          return 0;
+          // console.log(commit_values[i].date)
+          // console.log(date.toISOString().slice(0, 10))
+          // console.log("oooo")
+          // if(final_commit_count[i].date == date.toISOString().slice(0, 10) ){
+          //   console.log(commit_values[i].count)
+          //   console.log(`${final_commit_count[i].date} - count is ${final_commit_count[i].count}`)
+          //   return final_commit_count[i].count ;
+          // } else if(i==(final_commit_count.length-1)){
+          //   return 0;
+          // }
+      }
+      
+    }
     
   return (
-    <div>list</div>
+    <div> <h1>react-calendar-heatmap demos</h1>
+    <p>Random values with onClick and react-tooltip</p>
+    <CalendarHeatmap
+      startDate={shiftDate(today, -365)}
+      endDate={today}
+      values={randomValues}
+      classForValue={value => {
+        if (!value) {
+          return 'color-empty';
+        }
+        return `color-github-${value.count}`;
+      }}
+      tooltipDataAttrs={value => {
+        // console.log(value.date)
+        return {
+          'data-tip': `${value.date.toISOString().slice(0, 10)} has count: ${
+            value.count
+          }`,
+        };
+      }}
+      showWeekdayLabels={true}
+      onClick={value => alert(`Clicked on value with count: ${value.count}`)}
+    />
+    <ReactTooltip /></div>
   )
 }
 
