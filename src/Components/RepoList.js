@@ -10,8 +10,17 @@ const RepoList =  () => {
     let visibility = []
     var public_repo_data = {}
     let commit_date = []
+    let total_list = []
    
-    
+    function commit_message(date, msg){
+        this.date = date;
+        this.message = msg;
+    }
+
+    function commit_count(date, count){
+        this.date = date;
+        this.count = count;
+    }
 
     useEffect(() =>{
         axios.get(`https://api.github.com/users/${process.env.REACT_APP_USER}/repos`)
@@ -30,10 +39,6 @@ const RepoList =  () => {
         public_repo_data[publicRepoName[i]] = visibility[i];
     }
 
-    // for (let i = 0; i < props.private_list.length; i++){
-    //     public_repo_data[props.private_list[i]] = "private";
-    // }
-
     console.log(public_repo_data)
 
     var key_id = 0;
@@ -46,7 +51,6 @@ const RepoList =  () => {
         {
             console.log(key)
             if(public_repo_data.hasOwnProperty(key)){
-                console.log("eee")
 
                 if(value==="public")
             {
@@ -59,13 +63,16 @@ const RepoList =  () => {
                         console.log(data)
                         // total_list = Object.assign(total_list, response.data)
                         data.map((item) => {
-                            console.log(`repo name: ${key} and date:${item.commit.author.date}`)
-                            commit_date.push(item.commit.author.date)
+                            console.log(`repo name is: ${key} and date:${item.commit.author.date}`)
+                            const exact_date = item.commit.author.date.split("T",1);
+                            var commit_messages = new commit_message(item.commit.author.date, item.commit.message)
+                            total_list.push(commit_messages)
+                            commit_date.push(exact_date)
                         })
                     })
-                    .then(() => {console.log(commit_date)
-                        console.log("jjj")
-                    key_id++;
+                    .then(() => {
+                        console.log(total_list)
+                        key_id++;
                 } )
                 
                 
@@ -75,7 +82,7 @@ const RepoList =  () => {
             
         }}, []);
     
-       console.log("hh") 
+       
 
   return (
     <div>{commit_date}</div>
