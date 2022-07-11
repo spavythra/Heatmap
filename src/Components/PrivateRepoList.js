@@ -17,7 +17,7 @@ const PrivateRepoList =  () => {
             })
             let data = await response.json()
             let result = data.items
-            console.log(result)
+            // console.log(result)
 
             result.map((item) => {
                 // console.log(item.visibility)
@@ -25,9 +25,9 @@ const PrivateRepoList =  () => {
                 visibility.push(item.visibility)
             })
 
-            privateRepoName.map((item) => console.log("g"))
-            console.log(privateRepoName)
-            console.log(visibility)
+            // privateRepoName.map((item) => console.log("g"))
+            // console.log(privateRepoName)
+            // console.log(visibility)
 
             for (let i = 0; i < privateRepoName.length; i++){
                 private_repo_data[privateRepoName[i]] = visibility[i];
@@ -42,7 +42,7 @@ const PrivateRepoList =  () => {
         }
         fetchData()
     }, [])
-    console.log(private_repo_data)
+    // console.log(private_repo_data)
 
     // const full_list = Object.assign(private_repo_data, props.public_list.public_repo_data)
     //             console.log(full_list)
