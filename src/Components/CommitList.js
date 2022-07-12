@@ -2,7 +2,11 @@ import React from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
 import 'react-calendar-heatmap/dist/styles.css';
-import "../App.css"
+import "../App.css";
+import {connect} from "react-redux";
+import { commitSelector } from '../store/commitStore/commitSelectors';
+
+
 
 //getting the today's date using Date 
 //coverting date to yyyy/mm/dd format
@@ -10,9 +14,14 @@ const today = new Date().toISOString().split("T")[0];
 
 function CommitList(props) 
 {
+  // const {commits } = props; 
+  // let commit_values = commits
+  // console.log(commits)
+  let empty = 0;
     let final_commit_count = [];
     //total commit list from RepoList component
     let commit_values = props.public_private_list.commitList;
+    // console.log(commit_values)
 
     // function to count the number of
     //occurance of the same date
@@ -92,6 +101,10 @@ function CommitList(props)
           
         }
     // -----end of function---------
+
+    function count_print(value){
+      return(<div>the value is {value}</div>)
+    }
     
   return (
     <div> <h1>react-calendar-heatmap demos</h1>
@@ -119,10 +132,23 @@ function CommitList(props)
         };
       }}
       showWeekdayLabels={true}
-      onClick={value => alert(`Clicked on value with count: ${value.count}`)}
+      onClick={value => {
+        alert(`Clicked on value with count: ${value.count}`)
+      }}
     />
-    <ReactTooltip /></div>
+    <ReactTooltip />
+    {/* {count_print(empty)} */}
+    </div>
   )
 }
 
-export default CommitList
+// export default CommitList
+
+export default connect(
+  (state) => ({
+    
+  }),
+  (dispatch) => ({
+    
+  })
+)(CommitList)

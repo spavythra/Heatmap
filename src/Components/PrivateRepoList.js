@@ -49,7 +49,7 @@ const PrivateRepoList =  () => {
 
   return (
     // <div>lll</div>
-    <div><RepoList private_list ={{private_repo_data}}/></div>
+    <div><RepoList private_repo_list ={{private_repo_data}}/></div>
   )
 }
 
