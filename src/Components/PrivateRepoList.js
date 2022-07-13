@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import RepoList from './RepoList';
+import React, {useState, useEffect } from 'react';
+import PublicRepoList from './PublicRepoList';
 
 const PrivateRepoList =  () => {
     let privateRepoName = []
     let visibility = []
     var private_repo_data = {}
+    const [privateList, setPrivateList] = useState({})
 
     useEffect (() => {
         async function fetchData(){
@@ -17,7 +18,7 @@ const PrivateRepoList =  () => {
             })
             let data = await response.json()
             let result = data.items
-            // console.log(result)
+            console.log("result")
 
             result.map((item) => {
                 // console.log(item.visibility)
@@ -33,23 +34,23 @@ const PrivateRepoList =  () => {
                 private_repo_data[privateRepoName[i]] = visibility[i];
             }
 
-            
-        
             // console.log(private_repo_data)
+            setPrivateList(private_repo_data)
             } catch(err) {
                 console.log(err)
             }
         }
         fetchData()
     }, [])
-    // console.log(private_repo_data)
 
-    // const full_list = Object.assign(private_repo_data, props.public_list.public_repo_data)
-    //             console.log(full_list)
+    useEffect(() => {
+        // this will run after the 'users' has been changed
+        console.log(privateList)
+    }, [privateList]);
 
   return (
     // <div>lll</div>
-    <div><RepoList private_repo_list ={{private_repo_data}}/></div>
+    <div><PublicRepoList private_repo_list ={{private_repo_data}}/></div>
   )
 }
 

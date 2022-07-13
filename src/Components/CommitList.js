@@ -7,17 +7,17 @@ import {connect} from "react-redux";
 import { commitSelector } from '../store/commitStore/commitSelectors';
 
 
-
-//getting the today's date using Date 
+//getting today's date using Date 
 //coverting date to yyyy/mm/dd format
 const today = new Date().toISOString().split("T")[0];
 
 function CommitList(props) 
 {
-  // const {commits } = props; 
+  const {commits} = props; 
+  console.log(commits)
   // let commit_values = commits
   // console.log(commits)
-  let empty = 0;
+
     let final_commit_count = [];
     //total commit list from RepoList component
     let commit_values = props.public_private_list.commitList;
@@ -25,23 +25,25 @@ function CommitList(props)
 
     // function to count the number of
     //occurance of the same date
-    function findOcc(arr, key){
+    function findOcc(arr, key)
+    {
       let arr2 = [];
         
       arr.forEach((x)=>{
            
         // Checking if there is any object in arr2
         // which contains the key value
-         if(arr2.some((val)=>{ return val[key] === x[key] })){
-             
+         if(arr2.some((val)=>{ return val[key] === x[key] }))
+         {
            // If yes! then increase the occurrence by 1
            arr2.forEach((k)=>{
              if(k[key] === x[key]){ 
                k["count"]++
              }
-          })
-             
-         }else{
+          })  
+         }
+         else
+         {
            // If not! Then create a new object initialize 
            // it with the present iteration key's value and 
            // set the occurrence to 1
@@ -50,14 +52,14 @@ function CommitList(props)
            a["count"] = 1
            arr2.push(a);
          }
-      })
-        
+      }) 
       return arr2
     }
 
-    let key = "date"
-      // console.log(findOcc(commit_values, key))
-      final_commit_count = findOcc(commit_values, key)
+      let key = "date"
+        // console.log(findOcc(commit_values, key))
+
+      final_commit_count = findOcc(commits, key)
       // -----end of function---------
 
       //function to set the date and count
@@ -70,7 +72,8 @@ function CommitList(props)
       // -----end of function---------
 
       //function to shift the date one by one
-      function shiftDate(date, numDays) {
+      function shiftDate(date, numDays) 
+      {
         const newDate = new Date(date);
         newDate.setDate(newDate.getDate() + numDays);
         return newDate;
@@ -78,7 +81,8 @@ function CommitList(props)
       // -----end of function---------
 
       //function to create a range
-      function getRange(count) {
+      function getRange(count) 
+      {
         return Array.from({ length: count }, (_, i) => i);
       }
       // -----end of function---------
@@ -86,28 +90,33 @@ function CommitList(props)
       //function to check the date from the available commit list
       //and return its count value
       function getRandomInt(date) 
+      {
+        for(var i=0; i<commits.length; i++)
+        {
+          for (var j=0; j<final_commit_count.length; j++)
           {
-            for(var i=0; i<commit_values.length; i++){
-              for (var j=0; j<final_commit_count.length; j++){
-                if(final_commit_count[j].date === date.toISOString().slice(0, 10) ){
-                  return final_commit_count[j].count ;
-                } else{
-                  continue
-                }
-              }
-              return 0;
-              
+            if(final_commit_count[j].date === date.toISOString().slice(0, 10))
+            {
+              return final_commit_count[j].count ;
+            } 
+            else
+            {
+              continue
+            }
           }
-          
+          return 0;
         }
+          
+      }
     // -----end of function---------
 
-    function count_print(value){
-      return(<div>the value is {value}</div>)
-    }
+      function count_print(value)
+      {
+        return(<div>the value is {value}</div>)
+      }
     
-  return (
-    <div> <h1>react-calendar-heatmap demos</h1>
+    return (
+    <div> 
     
     <CalendarHeatmap
       startDate={shiftDate(today, -365)}
@@ -146,7 +155,7 @@ function CommitList(props)
 
 export default connect(
   (state) => ({
-    
+    commits: commitSelector(state),
   }),
   (dispatch) => ({
     

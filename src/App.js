@@ -6,7 +6,8 @@ import store  from "./store";
 import {Provider} from "react-redux";
 import { persistStore} from 'redux-persist';
 
-function App() {
+function App() 
+{
   let persistor = persistStore(store)
   
   return (
@@ -14,7 +15,7 @@ function App() {
       <h1>Individual heatmap</h1>
       <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      {/* <RepoList/> */}
+      {/* {<RepoList/>} */}
       <PrivateRepoList/>
       </PersistGate>
       </Provider>
