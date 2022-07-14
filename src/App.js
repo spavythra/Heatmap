@@ -11,16 +11,13 @@ const [privateRepos, setPrivateRepos] = useState([])
 const [commits, setCommits] = useState([])
 const [count, setCount] = useState([])
 const [showDetails, setShowDetail] = useState(false)
-let total_list = []
-
-//getting today's date using Date 
-    //coverting date to yyyy/mm/dd format
-    const today = new Date().toISOString().split("T")[0];
+let total_list = [];
+let public_repo_name =[]
+let private_repo_name =[]
 
 function handleSubmit(e) {
   e.preventDefault();
   searchRepos();
-  // console.log(commits)
 }
 
 function commit_message(date, msg,repo_name){
@@ -33,7 +30,7 @@ function commit_message(date, msg,repo_name){
     //occurance of the same date
     function findOcc(arr, key)
     {
-      console.log(arr)
+      // console.log(arr)
       let arr2 = [];
         
       arr.forEach((x)=>{
@@ -66,37 +63,44 @@ function commit_message(date, msg,repo_name){
       // -----end of function---------
 
 function searchRepos() {
-  // setLoading(true)
   axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:public`,{
                 headers: {
                     "Authorization" : `Bearer ${process.env.REACT_APP_TOKEN}`
                 }
-            }).then(res =>{
-    // setLoading(false)
-    setRepos(res.data.items)
-    searchPrivateRepos(res.data.items)
+            }).then((res) =>{
+              res.data.items.map((item) =>{
+                public_repo_name.push(item.name)
+              })
+            setRepos(public_repo_name)
+            searchPrivateRepos(public_repo_name)
   })
 }
 
 function searchPrivateRepos(public_data) {
-  // setLoading(true)
   axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:private`,{
                 headers: {
                     "Authorization" : `Bearer ${process.env.REACT_APP_TOKEN}`
                 }
-            }).then(res =>{
-    // setLoading(false)
-    setPrivateRepos(res.data.items)
-    let total_commits = Object.assign(public_data,res.data.items)
+            }).then((res) =>{
+              res.data.items.map((item) =>{
+                private_repo_name.push(item.name)
+              })
+
+    setPrivateRepos(private_repo_name)
+    let total_commits = public_data.concat(private_repo_name)
     renderRepo(total_commits)
+    console.log(total_commits)
   })
 }
 
 function renderRepo(repo){
   console.log(repo)
-  // setLoading(true)
+
   for(let i= 0; i< repo.length;i++){
-    axios.get(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${repo[i].name}/commits`,{
+    // console.log(repo.length)
+      // console.log(repo[i].name)
+
+    axios.get(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${repo[i]}/commits`,{
                 headers: {
                     "Authorization" : `Token ${process.env.REACT_APP_TOKEN}`
                 }
@@ -109,35 +113,21 @@ function renderRepo(repo){
     if(i===(repo.length-1)){
       setCommits(total_list)
       countCommit(total_list)
+      
     }
     })
   }
-  // setLoading(false)
-  
-  // console.log(total_list)
-  // countCommit(commits)
-
-
-
-  // return(
-  //   <div>
-  //     <button onClick={() => countCommit(commits)}>view your contribution</button>
-  //   </div>
-  // )
+  console.log(total_list)
   
 }
 
 function countCommit(commit){
-  
+  // console.log(commit)
   let commit_values = findOcc(commit, "date")
-  console.log(commit_values)
+  // console.log(commit_values)
   setCount(commit_values)
   setShowDetail(true)
-  return(
-    <div >
-      {/* <Form total_list={total_list} count={count}/> */}
-    </div>
-  )
+ 
 }
 
   return (
@@ -149,7 +139,6 @@ function countCommit(commit){
      onChange={e => setUser(e.target.value)}/>
      <button className='button' onClick={handleSubmit}>click</button>
      { showDetails && <Form commits={commits} count={count}/>}
-     {/* {countCommit(commits)} */}
     </div>
   );
 }
