@@ -2,6 +2,7 @@ import './App.css';
 import {useState} from "react";
 import axios from "axios";
 import Form from "./Components/Form"
+import search from './img/search.png'
 
 function App() {
 const [user, setUser] = useState("")
@@ -97,8 +98,6 @@ function renderRepo(repo){
   console.log(repo)
 
   for(let i= 0; i< repo.length;i++){
-    // console.log(repo.length)
-      // console.log(repo[i].name)
 
     axios.get(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${repo[i]}/commits`,{
                 headers: {
@@ -131,13 +130,19 @@ function countCommit(commit){
 }
 
   return (
-    <div className="App">
+    <div className="header">
+      <h1>Git User Heatmap</h1>
+      {/* <p>Enter your Github username</p> */}
+      <div className='input-container'>
+      <div className='search-bar'>
      <input 
      className='input'
      value={user}
-     placeholder="enter"
+     placeholder="Enter your git username"
      onChange={e => setUser(e.target.value)}/>
-     <button className='button' onClick={handleSubmit}>click</button>
+     <button className='button' onClick={handleSubmit}><img src={search}/></button>
+     </div>
+     </div>
      { showDetails && <Form commits={commits} count={count}/>}
     </div>
   );

@@ -2,6 +2,8 @@ import React from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
 import 'react-calendar-heatmap/dist/styles.css';
+import '../App.css';
+
 
 function Form({commits,count}) {
     console.log(count)
@@ -59,7 +61,7 @@ const randomValues = getRange(365).map(index => {
   
 
   return (
-    <div><CalendarHeatmap
+    <div className='calender'><CalendarHeatmap
     startDate={shiftDate(today, -365)}
     endDate={today}
     values={randomValues}
@@ -86,6 +88,12 @@ const randomValues = getRange(365).map(index => {
       alert(`Clicked on value with count: ${value.count}`)
     }}
   />
+  <div className='box'><p>Less </p>
+  <div className='color-box1'></div>
+  <div className='color-box2'></div>
+  <div className='color-box3'></div>
+  <div className='color-box4'></div>
+  <div className='color-box5'></div><p> More</p></div>
   <ReactTooltip /></div>
   )
 }
