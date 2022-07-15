@@ -255,6 +255,42 @@ p {
   font-size: 8px !important;
 }
 
+/* display commit message */
+.commit-info{
+  margin-top: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+h2 {
+  font-size: 2em;
+  padding: 10px 0;
+  font-weight: 400;
+  margin-bottom: 40px;
+  color: #303262;
+}
+table {
+  border-collapse: collapse;
+  width: 90%;
+  table-layout: fixed;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  font-size: 20px;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: rgb(151, 151, 151);
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #787ff6;
+  color: white;
+}
+
 /* media style settings */
 
 @media (max-width: 1000px){

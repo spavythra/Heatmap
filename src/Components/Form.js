@@ -1,11 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
 import 'react-calendar-heatmap/dist/styles.css';
 import '../App.css';
+import Message from './Message';
 
 
-function Form({commits,count}) {
+function Form({commits,count,repoCommit}) {
+
+    const [day, setDay] = useState("")
+    const [showDetails, setShowDetail] = useState(false)
     // console.log(count)
 //getting today's date using Date 
 //coverting date to yyyy/mm/dd format
@@ -58,9 +62,15 @@ const randomValues = getRange(365).map(index => {
           }
             
         }
+
+        function handleSubmit(e) {
+            setDay(e.date.toISOString().split("T")[0])
+            setShowDetail(true)
+          }
   
 
   return (
+    <div>
     <div className='calender'><CalendarHeatmap
     startDate={shiftDate(today, -365)}
     endDate={today}
@@ -84,9 +94,7 @@ const randomValues = getRange(365).map(index => {
       };
     }}
     showWeekdayLabels={true}
-    onClick={value => {
-      alert(`Clicked on value with count: ${value.count}`)
-    }}
+    onClick={handleSubmit}
   />
   <div className='box'><p>Less </p>
   <div className='color-box1'></div>
@@ -94,7 +102,10 @@ const randomValues = getRange(365).map(index => {
   <div className='color-box3'></div>
   <div className='color-box4'></div>
   <div className='color-box5'></div><p> More</p></div>
-  <ReactTooltip /></div>
+  <ReactTooltip />
+  </div>
+  { showDetails && <Message day={day} commits={commits} repoCommit={repoCommit}/>}
+  </div>
   )
 }
 

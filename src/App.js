@@ -11,8 +11,10 @@ const [repos, setRepos] = useState([])
 const [privateRepos, setPrivateRepos] = useState([])
 const [commits, setCommits] = useState([])
 const [count, setCount] = useState([])
+const [repoCommit, setRepoCommit] = useState([])
 const [showDetails, setShowDetail] = useState(false)
 let total_list = [];
+let total_details = [];
 let public_repo_name =[]
 let private_repo_name =[]
 
@@ -21,10 +23,16 @@ function handleSubmit(e) {
   searchRepos();
 }
 
-function commit_message(date, msg,repo_name){
+function commit_message(date, msg){
   this.date = date;
   this.message = msg;
   // this.repo_name = repo_name;
+}
+
+function repo_info(date, msg,repo_name){
+  this.date = date;
+  this.message = msg;
+  this.repo_name = repo_name;
 }
 
 // function to count the number of
@@ -107,10 +115,13 @@ function renderRepo(repo){
         res.data.map((item) =>{
           const exact_date = (item.commit.author.date.split("T",1)).toString();
                       var commit_messages = new commit_message(exact_date, item.commit.message)
+                      var repo_msg = new repo_info(exact_date, item.commit.message,repo[i])
                       total_list.push(commit_messages)
+                      total_details.push(repo_msg)
       })
       if(i===(repo.length-1)){
         setCommits(total_list)
+        setRepoCommit(total_details)
         countCommit(total_list)
         
       }
@@ -127,11 +138,14 @@ function renderRepo(repo){
               }).then(res =>{
         res.data.map((item) =>{
           const exact_date = (item.commit.author.date.split("T",1)).toString();
-                      var commit_messages = new commit_message(exact_date, item.commit.message)
-                      total_list.push(commit_messages)
+                var commit_messages = new commit_message(exact_date, item.commit.message)
+                var repo_msg = new repo_info(exact_date, item.commit.message,repo[i])
+                total_list.push(commit_messages)
+                total_details.push(repo_msg)
       })
       if(i===(repo.length-1)){
         setCommits(total_list)
+        setRepoCommit(total_details)
         countCommit(total_list)
         
       }
@@ -167,7 +181,7 @@ function countCommit(commit){
      <button className='button' onClick={handleSubmit}><img src={search}/></button>
      </div>
      </div>
-     { showDetails && <Form commits={commits} count={count}/>}
+     { showDetails && <Form commits={commits} count={count} repoCommit={repoCommit}/>}
     </div>
   );
 }
