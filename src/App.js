@@ -169,14 +169,13 @@ function countCommit(commit){
 
   return (
     <div className="header">
-      <h1>Git User Heatmap</h1>
-      {/* <p>Enter your Github username</p> */}
+      <h1>Oma-Git Heatmap</h1>
       <div className='input-container'>
       <div className='search-bar'>
      <input 
      className='input'
      value={user}
-     placeholder="Enter your git username"
+     placeholder="Enter a git username"
      onChange={e => setUser(e.target.value)}/>
      <button className='button' onClick={handleSubmit}><img src={search}/></button>
      </div>

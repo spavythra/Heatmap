@@ -88,9 +88,9 @@ const randomValues = getRange(365).map(index => {
     tooltipDataAttrs={value => {
       // console.log(value.date)
       return {
-        'data-tip': `${value.date.toISOString().slice(0, 10)} has count: ${
+        'data-tip': `${value.date.toISOString().slice(0, 10)} has ${
           value.count
-        }`,
+        } commits`,
       };
     }}
     showWeekdayLabels={true}
@@ -104,7 +104,7 @@ const randomValues = getRange(365).map(index => {
   <div className='color-box5'></div><p> More</p></div>
   <ReactTooltip />
   </div>
-  { showDetails && <Message day={day} commits={commits} repoCommit={repoCommit}/>}
+  { showDetails && <Message day={day} repoCommit={repoCommit}/>}
   </div>
   )
 }

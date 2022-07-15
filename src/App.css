@@ -7,6 +7,8 @@
  * The github and gitlab color scales are provided for reference.
  */
 
+ /* ---- heatmap formatting --- */
+
  .react-calendar-heatmap text {
   font-size: 10px;
   fill: #aaa;
@@ -54,6 +56,7 @@
 }
 
 
+/* -----Page components and fonts formatting----- */
 
 h1,
 p{
@@ -74,7 +77,6 @@ h1 {
 p {
   font-size: 30px;
   font-weight: 100;
-  /* letter-spacing: 5px; */
 }
 
 .header {
@@ -89,32 +91,11 @@ p {
   flex-direction: column;
 }
 
-/* input{
-  border : 3px solid #787ff6;
-  height: 40px;
-  width: 300px;
-  border-radius: 50px;
-  padding: 0px 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-} */
-
-/* .input-container {
-  width: 80%; 
-  padding: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-position: center;
-  background-size: cover;
-  min-height: 100vh;
-} */
-
+/* ------ search bar formatting ------ */
 .search-bar{
   width: 100%;
-  /* max-width: 700px; */
-  border-radius: 60px;
+  max-width: 700px;
+  border-radius: 25px;
   padding: 5px 10px;
   backdrop-filter: blur(4px) saturate(180%) ;
   border : 2px solid #787ff6;
@@ -153,7 +134,7 @@ p {
   cursor: pointer;
 }
 
-/* color box color code */
+/* ------ heatmap colour scaling ------ */
 .box{
   display: flex;
   flex-direction: row;
@@ -204,7 +185,6 @@ p {
   border-radius: 1px;
   background-color: #787ff6;
 
-  
   /* flex-direction: flex-end; */
 }
 
@@ -216,7 +196,6 @@ p {
   border-radius: 1px;
   background-color: #484C93;
 
-  
   /* flex-direction: flex-end; */
 }
 
@@ -225,13 +204,10 @@ p {
   text-align: center;
   margin-left: 10px;
   margin-right: 10px;
+  font-weight: 500;
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  color: rgb(151, 151, 151);
+  color: rgb(125, 125, 125);
 }
-
-/* .react-calendar-heatmap .viewBox{
-  height: 300px !important;
-} */
 
 .calender {
   margin-top: 80px;
@@ -251,11 +227,11 @@ p {
 }
 
 .react-calendar-heatmap text{
-  fill: rgb(151, 151, 151) !important;
+  fill: rgb(125, 125, 125) !important;
   font-size: 8px !important;
 }
 
-/* display commit message */
+/*------- display commit message --------*/
 .commit-info{
   margin-top: 40px;
   align-items: center;
@@ -263,6 +239,7 @@ p {
   display: flex;
   flex-direction: column;
 }
+
 h2 {
   font-size: 2em;
   padding: 10px 0;
@@ -270,6 +247,9 @@ h2 {
   margin-bottom: 40px;
   color: #303262;
 }
+
+/* ------ commit info table formatting ------ */
+
 table {
   border-collapse: collapse;
   width: 90%;
@@ -281,7 +261,7 @@ th, td {
   padding: 8px;
   font-size: 20px;
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  color: rgb(151, 151, 151);
+  color: rgb(125, 125, 125);
 }
 
 tr:nth-child(even){background-color: #f2f2f2}
@@ -291,7 +271,7 @@ th {
   color: white;
 }
 
-/* media style settings */
+/* -----media style settings----- */
 
 @media (max-width: 1000px){
   .box{

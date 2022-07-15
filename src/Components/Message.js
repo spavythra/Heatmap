@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Message({day,commits, repoCommit}) {
+function Message({day, repoCommit}) {
     let commit_messages = [];
     function message_obj( msg,repo){
         this.msg = msg;
