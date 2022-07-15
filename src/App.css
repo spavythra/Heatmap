@@ -273,7 +273,7 @@ th {
 
 /* -----media style settings----- */
 
-@media (max-width: 1000px){
+@media (max-width: 1300px){
   .box{
     margin-top: -10px;
     margin-bottom: 20px;
