@@ -64,11 +64,7 @@ function commit_message(date, msg,repo_name){
       // -----end of function---------
 
 function searchRepos() {
-  axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:public`,{
-                headers: {
-                    "Authorization" : `Bearer ${process.env.REACT_APP_TOKEN}`
-                }
-            }).then((res) =>{
+  axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:public`).then((res) =>{
               res.data.items.map((item) =>{
                 public_repo_name.push(item.name)
               })
@@ -78,7 +74,11 @@ function searchRepos() {
 }
 
 function searchPrivateRepos(public_data) {
-  axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:private`,{
+  if(!process.env.REACT_APP_TOKEN){
+    setPrivateRepos(public_data)
+    renderRepo(public_data)
+  } else {
+    axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:private`,{
                 headers: {
                     "Authorization" : `Bearer ${process.env.REACT_APP_TOKEN}`
                 }
@@ -90,33 +90,57 @@ function searchPrivateRepos(public_data) {
     setPrivateRepos(private_repo_name)
     let total_commits = public_data.concat(private_repo_name)
     renderRepo(total_commits)
-    console.log(total_commits)
+    // console.log(total_commits)
   })
+  }
+  
 }
 
 function renderRepo(repo){
-  console.log(repo)
+  // console.log(repo)
 
-  for(let i= 0; i< repo.length;i++){
+  if(!process.env.REACT_APP_TOKEN){
+    for(let i= 0; i< repo.length;i++){
 
-    axios.get(`https://api.github.com/repos/${process.env.REACT_APP_USER}/${repo[i]}/commits`,{
-                headers: {
-                    "Authorization" : `Token ${process.env.REACT_APP_TOKEN}`
-                }
-            }).then(res =>{
-      res.data.map((item) =>{
-        const exact_date = (item.commit.author.date.split("T",1)).toString();
-                    var commit_messages = new commit_message(exact_date, item.commit.message)
-                    total_list.push(commit_messages)
-    })
-    if(i===(repo.length-1)){
-      setCommits(total_list)
-      countCommit(total_list)
-      
+      axios.get(`https://api.github.com/repos/${user}/${repo[i]}/commits`
+              ).then(res =>{
+        res.data.map((item) =>{
+          const exact_date = (item.commit.author.date.split("T",1)).toString();
+                      var commit_messages = new commit_message(exact_date, item.commit.message)
+                      total_list.push(commit_messages)
+      })
+      if(i===(repo.length-1)){
+        setCommits(total_list)
+        countCommit(total_list)
+        
+      }
+      })
     }
-    })
+    // console.log(total_list)
+  }else {
+    for(let i= 0; i< repo.length;i++){
+
+      axios.get(`https://api.github.com/repos/${user}/${repo[i]}/commits`,{
+                  headers: {
+                      "Authorization" : `Token ${process.env.REACT_APP_TOKEN}`
+                  }
+              }).then(res =>{
+        res.data.map((item) =>{
+          const exact_date = (item.commit.author.date.split("T",1)).toString();
+                      var commit_messages = new commit_message(exact_date, item.commit.message)
+                      total_list.push(commit_messages)
+      })
+      if(i===(repo.length-1)){
+        setCommits(total_list)
+        countCommit(total_list)
+        
+      }
+      })
+    }
+    // console.log(total_list)
   }
-  console.log(total_list)
+
+  
   
 }
 

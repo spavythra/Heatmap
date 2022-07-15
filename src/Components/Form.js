@@ -6,7 +6,7 @@ import '../App.css';
 
 
 function Form({commits,count}) {
-    console.log(count)
+    // console.log(count)
 //getting today's date using Date 
 //coverting date to yyyy/mm/dd format
 const today = new Date().toISOString().split("T")[0];
