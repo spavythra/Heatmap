@@ -1,1 +1,0 @@
-export const SHOW_COMMIT = 'SHOW_COMMIT'

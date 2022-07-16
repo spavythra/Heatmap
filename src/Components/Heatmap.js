@@ -7,10 +7,9 @@ import 'react-calendar-heatmap/dist/styles.css'
 import '../App.css'
 import Message from './Message'
 
-function heatmap ({ commits, count, repoCommit }) {
+function Heatmap ({ commits, count, repoCommit, user }) {
   const [day, setDay] = useState('')
   const [showDetails, setShowDetail] = useState(false)
-  console.log(count)
 
   // getting today's date using Date
   // coverting date to yyyy/mm/dd format
@@ -89,9 +88,9 @@ function heatmap ({ commits, count, repoCommit }) {
         <div className='color-box5'></div><p> More</p></div>
         <ReactTooltip />
     </div>
-    { showDetails && <Message day={day} repoCommit={repoCommit}/>}
+    { showDetails && <Message day={day} repoCommit={repoCommit} user={user}/>}
   </div>
   )
 }
 
-export default heatmap
+export default Heatmap

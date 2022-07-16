@@ -173,7 +173,7 @@ function App () {
         <button className='button' onClick={handleSubmit}><img src={search}/></button>
       </div>
      </div>
-     { showRepoInfo && <Heatmap commits={commits} count={count} repoCommit={repoCommit}/>}
+     { showRepoInfo && <Heatmap commits={commits} count={count} repoCommit={repoCommit} user={user}/>}
     </div>
   )
 }

@@ -3,7 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-function Message ({ day, repoCommit }) {
+function Message ({ day, repoCommit, user }) {
   const commit_messages = []
   function message_obj (msg, repo) {
     this.msg = msg
@@ -27,7 +27,7 @@ function Message ({ day, repoCommit }) {
             </tr>
 
         {commit_messages.map(commit => {
-          return (<tr key={commit.id}><td>{commit.repo}</td><td>{commit.msg}</td></tr>)
+          return (<tr key={commit.id}><td><a href={`https://github.com/${user}/${commit.repo}`} target='blank'>{commit.repo}</a></td><td>{commit.msg}</td></tr>)
         })}
 
         </table>
