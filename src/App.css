@@ -213,10 +213,10 @@ p {
   color: rgb(125, 125, 125);
 }
 
-.calender {
+.calendar {
   margin-top: 80px;
   margin-left: 20px;
-  margin-right: 40px;
+  margin-right: 20px;
   border: 1px solid rgba(0, 0, 0, 0.1) ;
 }
 

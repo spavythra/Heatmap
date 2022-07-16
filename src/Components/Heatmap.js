@@ -7,7 +7,7 @@ import 'react-calendar-heatmap/dist/styles.css'
 import '../App.css'
 import Message from './Message'
 
-function Form ({ commits, count, repoCommit }) {
+function heatmap ({ commits, count, repoCommit }) {
   const [day, setDay] = useState('')
   const [showDetails, setShowDetail] = useState(false)
   console.log(count)
@@ -61,7 +61,7 @@ function Form ({ commits, count, repoCommit }) {
 
   return (
     <div>
-        <div className='calender'>
+        <div className='calendar'>
           <CalendarHeatmap
             startDate={shiftDate(today, -365)}
             endDate={today}
@@ -94,4 +94,4 @@ function Form ({ commits, count, repoCommit }) {
   )
 }
 
-export default Form
+export default heatmap

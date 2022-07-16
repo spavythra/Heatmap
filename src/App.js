@@ -5,9 +5,9 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable camelcase */
 import './App.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
-import Form from './Components/Form'
+import Heatmap from './Components/Heatmap'
 import search from './img/search.png'
 
 function App () {
@@ -18,16 +18,18 @@ function App () {
   const [commits, setCommits] = useState([])
   const [count, setCount] = useState([])
   const [repoCommit, setRepoCommit] = useState([])
-  const [showrepoInfo, setShowDetail] = useState(false)
+  const [showRepoInfo, setShowRepoInfo] = useState(false)
   // eslint-disable-next-line camelcase
   let total_commitList = []
   let total_repoInfo = []
   let public_repo_name = []
   // eslint-disable-next-line prefer-const
   let private_repo_name = []
+  const firstTimeRender = useRef(true)
 
   function handleSubmit (e) {
     e.preventDefault()
+    e.persist()
     searchRepos()
   }
 
@@ -42,8 +44,8 @@ function App () {
     this.repo_name = repo_name
   }
 
-  // count the number of occurences of the same date
-  function date_occurences (arr, key) {
+  // count the number of occurrences of the same date
+  function date_occurrences (arr, key) {
     const tempArray = []
 
     arr.forEach((x) => {
@@ -145,13 +147,18 @@ function App () {
   }
 
   function countCommit (commit) {
-    const commit_values = date_occurences(commit, 'date')
+    const commit_values = date_occurrences(commit, 'date')
     setCount(commit_values)
-    setShowDetail(true)
+    setShowRepoInfo(true)
   }
 
   useEffect(() => {
-  }, [showrepoInfo])
+    if (!firstTimeRender.current) { searchRepos() }
+  }, [showRepoInfo])
+
+  useEffect(() => {
+    firstTimeRender.current = false
+  }, [])
 
   return (
     <div className="header">
@@ -166,7 +173,7 @@ function App () {
         <button className='button' onClick={handleSubmit}><img src={search}/></button>
       </div>
      </div>
-     { showrepoInfo && <Form commits={commits} count={count} repoCommit={repoCommit}/>}
+     { showRepoInfo && <Heatmap commits={commits} count={count} repoCommit={repoCommit}/>}
     </div>
   )
 }

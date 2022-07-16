@@ -8,7 +8,6 @@ function Message ({ day, repoCommit }) {
   function message_obj (msg, repo) {
     this.msg = msg
     this.repo = repo
-    // this.repo_name = repo_name;
   }
 
   for (const property in repoCommit) {
@@ -17,7 +16,6 @@ function Message ({ day, repoCommit }) {
       commit_messages.push(detail)
     }
   }
-  // console.log(commit_messages)
   return (
     <div className='commit-info'>
          <h2>Commit Information</h2>
