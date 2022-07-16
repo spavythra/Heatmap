@@ -10,6 +10,7 @@ import Message from './Message'
 function Form ({ commits, count, repoCommit }) {
   const [day, setDay] = useState('')
   const [showDetails, setShowDetail] = useState(false)
+  console.log(count)
 
   // getting today's date using Date
   // coverting date to yyyy/mm/dd format
@@ -60,7 +61,8 @@ function Form ({ commits, count, repoCommit }) {
 
   return (
     <div>
-        <div className='calender'><CalendarHeatmap
+        <div className='calender'>
+          <CalendarHeatmap
             startDate={shiftDate(today, -365)}
             endDate={today}
             values={randomValues}

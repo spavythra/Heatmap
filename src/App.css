@@ -85,21 +85,25 @@ p {
   text-align: center;
   /* background: #e9effb; */
   color: black;
-  align-items: center;
+  /* align-items: center;
   justify-content: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
 }
 
 /* ------ search bar formatting ------ */
+.input-container{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
 .search-bar{
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
   border-radius: 25px;
   padding: 5px 10px;
   backdrop-filter: blur(4px) saturate(180%) ;
   border : 2px solid #787ff6;
-  margin-left: -5%;
   display: flex;
   justify-content: center;
   align-items: center;

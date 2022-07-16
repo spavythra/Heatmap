@@ -5,7 +5,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable camelcase */
 import './App.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Form from './Components/Form'
 import search from './img/search.png'
@@ -18,10 +18,10 @@ function App () {
   const [commits, setCommits] = useState([])
   const [count, setCount] = useState([])
   const [repoCommit, setRepoCommit] = useState([])
-  const [showDetails, setShowDetail] = useState(false)
+  const [showrepoInfo, setShowDetail] = useState(false)
   // eslint-disable-next-line camelcase
-  let total_list = []
-  let total_details = []
+  let total_commitList = []
+  let total_repoInfo = []
   let public_repo_name = []
   // eslint-disable-next-line prefer-const
   let private_repo_name = []
@@ -42,7 +42,7 @@ function App () {
     this.repo_name = repo_name
   }
 
-  // count the number of occurances of the same date
+  // count the number of occurences of the same date
   function date_occurences (arr, key) {
     const tempArray = []
 
@@ -83,7 +83,7 @@ function App () {
   function searchPrivateRepos (public_data) {
     if (!process.env.REACT_APP_TOKEN) {
       setPrivateRepos(public_data)
-      renderRepo(public_data)
+      renderCommits(public_data)
     } else {
       axios.get(`https://api.github.com/search/repositories?q=user:${user}+is:private`, {
         headers: {
@@ -96,12 +96,12 @@ function App () {
 
         setPrivateRepos(private_repo_name)
         const total_commits = public_data.concat(private_repo_name)
-        renderRepo(total_commits)
+        renderCommits(total_commits)
       })
     }
   }
 
-  function renderRepo (repo) {
+  function renderCommits (repo) {
     if (!process.env.REACT_APP_TOKEN) {
       for (let i = 0; i < repo.length; i++) {
         axios.get(`https://api.github.com/repos/${user}/${repo[i]}/commits`
@@ -110,13 +110,13 @@ function App () {
             const exact_date = (item.commit.author.date.split('T', 1)).toString()
             const commit_messages = new commit_message(exact_date, item.commit.message)
             const repo_msg = new repo_info(exact_date, item.commit.message, repo[i])
-            total_list.push(commit_messages)
-            total_details.push(repo_msg)
+            total_commitList.push(commit_messages)
+            total_repoInfo.push(repo_msg)
           })
           if (i === (repo.length - 1)) {
-            setCommits(total_list)
-            setRepoCommit(total_details)
-            countCommit(total_list)
+            setCommits(total_commitList)
+            setRepoCommit(total_repoInfo)
+            countCommit(total_commitList)
           }
         })
       }
@@ -131,13 +131,13 @@ function App () {
             const exact_date = (item.commit.author.date.split('T', 1)).toString()
             const commit_messages = new commit_message(exact_date, item.commit.message)
             const repo_msg = new repo_info(exact_date, item.commit.message, repo[i])
-            total_list.push(commit_messages)
-            total_details.push(repo_msg)
+            total_commitList.push(commit_messages)
+            total_repoInfo.push(repo_msg)
           })
           if (i === (repo.length - 1)) {
-            setCommits(total_list)
-            setRepoCommit(total_details)
-            countCommit(total_list)
+            setCommits(total_commitList)
+            setRepoCommit(total_repoInfo)
+            countCommit(total_commitList)
           }
         })
       }
@@ -149,6 +149,9 @@ function App () {
     setCount(commit_values)
     setShowDetail(true)
   }
+
+  useEffect(() => {
+  }, [showrepoInfo])
 
   return (
     <div className="header">
@@ -163,7 +166,7 @@ function App () {
         <button className='button' onClick={handleSubmit}><img src={search}/></button>
       </div>
      </div>
-     { showDetails && <Form commits={commits} count={count} repoCommit={repoCommit}/>}
+     { showrepoInfo && <Form commits={commits} count={count} repoCommit={repoCommit}/>}
     </div>
   )
 }
