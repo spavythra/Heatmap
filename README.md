@@ -23,6 +23,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+- Type a git username in the search box
+- Click on search and view the heatmap of that repository
+- Hover over the dates to see the specific commits on that day
+- Click on any specific date to view the commits information logged on that day
 
 
 ## Deployment
